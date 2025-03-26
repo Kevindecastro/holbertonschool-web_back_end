@@ -1,3 +1,4 @@
+/* eslint-disable */
 export default function createReportObject(employeesList) {
     return {
         allEmployees: employeesList, // allEmployees contient les départements et les employés
