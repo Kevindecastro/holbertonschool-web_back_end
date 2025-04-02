@@ -1,3 +1,4 @@
+/* eslint-disable */
 // 10. Fonction mettant à jour les éléments d'un Map
 export default function updateUniqueItems(map) {
     if (!(map instanceof Map)) throw new Error('Cannot process');

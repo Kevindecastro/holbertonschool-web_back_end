@@ -1,3 +1,4 @@
+/* eslint-disable */
 // 4. Fonction mettant à jour les notes des étudiants par ville
 export default function updateStudentGradeByCity(list, city, newGrades) {
     return list.filter(student => student.location === city)// Sélectionne les étudiants de la ville

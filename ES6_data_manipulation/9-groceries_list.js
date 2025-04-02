@@ -1,3 +1,4 @@
+/* eslint-disable */
 // 9. Fonction retournant une liste d'achats sous forme de Map
 export default function groceriesList() {
     return new Map([

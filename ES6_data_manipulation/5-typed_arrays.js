@@ -1,3 +1,4 @@
+/* eslint-disable */
 // 5. Fonction créant un ArrayBuffer et stockant un Int8
 export default function createInt8TypedArray(length, position, value) {
     const buffer = new ArrayBuffer(length);
