@@ -39,7 +39,8 @@ class Server:
 
     def get_hyper(self, page: int = 1, page_size: int = 10) -> Dict:
         """
-        Retourne un dictionnaire contenant des informations hypermédia sur la pagination.
+        Retourne un dictionnaire contenant des informations
+        hypermédia sur la pagination
 
         Args:
             page (int): Numéro de la page
