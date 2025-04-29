@@ -5,6 +5,7 @@ Mesure du temps pour exécuter quatre compréhensions asynchrones en parallèle
 
 import asyncio
 import time
+
 async_comprehension = __import__('1-async_comprehension').async_comprehension
 
 
@@ -14,11 +15,6 @@ async def measure_runtime() -> float:
     mesure le temps total d'exécution
     """
     start_time = time.perf_counter()
-    await asyncio.gather(
-        async_comprehension(),
-        async_comprehension(),
-        async_comprehension(),
-        async_comprehension()
-    )
+    await asyncio.gather(*(async_comprehension() for _ in range(4)))
     end_time = time.perf_counter()
     return end_time - start_time
