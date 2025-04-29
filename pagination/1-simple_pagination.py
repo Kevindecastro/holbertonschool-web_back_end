@@ -21,6 +21,7 @@ def index_range(page: int, page_size: int) -> Tuple[int, int]:
     end_index = page * page_size
     return (start_index, end_index)
 
+
 class Server:
     """Classe serveur pour paginer un dataset de prénoms populaires"""
     DATA_FILE = "Popular_Baby_Names.csv"
