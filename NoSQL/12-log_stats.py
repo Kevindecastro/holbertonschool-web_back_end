@@ -17,16 +17,16 @@ def log_stats():
     """
     # Connect to MongoDB
     client = MongoClient('mongodb://127.0.0.1:27017')
-    db = client.logs
-    collection = db.nginx
+    db = client['logs']
+    collection = db['nginx']
 
     # Get total number of logs
     total_logs = collection.count_documents({})
     print(f"{total_logs} logs")
 
     # Methods to count
-    methods = ["GET", "POST", "PUT", "PATCH", "DELETE"]
     print("Methods:")
+    methods = ["GET", "POST", "PUT", "PATCH", "DELETE"]
 
     # Count each method
     for method in methods:
@@ -34,11 +34,10 @@ def log_stats():
         print(f"\tmethod {method}: {count}")
 
     # Count GET requests to /status
-    status_count = collection.count_documents(
+    status_check = collection.count_documents(
         {"method": "GET", "path": "/status"}
     )
-    print(f"{status_count} logs with method=GET")
-    print(f"\tpath=/status")
+    print(f"{status_check} status check")
 
 
 if __name__ == "__main__":
