@@ -1,20 +1,9 @@
 #!/usr/bin/env python3
 """ 12-log_stats """
+
 from pymongo import MongoClient
 
-
-def log_stats():
-    """
-    Displays statistics about Nginx logs stored in the 'nginx' collection.
-
-    This includes:
-        - Total number of logs.
-        - Number of logs for each HTTP method.
-        - Number of logs with method=GET and path=/status.
-
-    Returns:
-        None
-    """
+if __name__ == "__main__":
     # Connect to MongoDB
     client = MongoClient('mongodb://127.0.0.1:27017')
     db = client['logs']
@@ -39,6 +28,4 @@ def log_stats():
     )
     print(f"{status_check} status check")
 
-
-if __name__ == "__main__":
-    log_stats()
+client.close()
