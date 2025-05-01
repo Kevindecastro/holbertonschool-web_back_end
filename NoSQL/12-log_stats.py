@@ -6,8 +6,8 @@ from pymongo import MongoClient
 if __name__ == "__main__":
     # Connect to MongoDB
     client = MongoClient('mongodb://127.0.0.1:27017')
-    db = client['logs']
-    collection = db['nginx']
+    db = client.logs
+    collection = db.nginx
 
     # Get total number of logs
     total_logs = collection.count_documents({})
@@ -27,5 +27,3 @@ if __name__ == "__main__":
         {"method": "GET", "path": "/status"}
     )
     print(f"{status_check} status check")
-
-client.close()
