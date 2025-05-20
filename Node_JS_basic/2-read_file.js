@@ -16,22 +16,22 @@ function countStudents(path) {
     .filter(line => line.trim() !== '');
     
     // Extraction des lignes de données
-    const NUMBER_OF_STUDENTS = data.slice(1)
+    const students = data.slice(1)
     .map(line => line.split(','))
     .filter(cols => cols.length >= 4);
     
     // Affichage du nombre total d'étudiants
-    console.log(`Number of students: ${NUMBER_OF_STUDENTS.length}`);
+    console.log(`Number of students: ${students.length}`);
     
     // Création d'un objet pour regrouper les étudiants par filière
     const fields = {};
-    for (const [LIST_OF_FIRSTNAMES, , , FIELD] of NUMBER_OF_STUDENTS) {
-        if (!fields[FIELD]) fields[FIELD] = [];
-        fields[FIELD].push(LIST_OF_FIRSTNAMES);
+    for (const [firstname, , , field] of students) {
+        if (!fields[field]) fields[field] = [];
+        fields[field].push(firstname);
     }
     // Affichage du nombre d'étudiants et de la liste des prénoms pour chaque filière
-    for (const FIELD in fields) {
-      console.log(`Number of students in ${FIELD}: ${fields[FIELD].length}. List: ${fields[FIELD].join(', ')}`);
+    for (const field in fields) {
+      console.log(`Number of students in ${field}: ${fields[field].length}. List: ${fields[field].join(', ')}`);
     }
 
   } catch (err) {
