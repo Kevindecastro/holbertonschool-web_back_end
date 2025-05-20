@@ -1,4 +1,4 @@
-const fs = require('node:fs');
+const fs = require('fs');
 
 /**
  * Lit un fichier CSV contenant une liste d'étudiants et affiche :
