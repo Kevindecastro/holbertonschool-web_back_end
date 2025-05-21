@@ -1,6 +1,13 @@
 const fs = require('fs');
 
-
+/**
+ * Lit un fichier CSV contenant une liste d'étudiants et affiche :
+ * - Le nombre total d'étudiants
+ * - Le nombre d'étudiants par filière
+ * - La liste des prénoms d'étudiants par filière
+ *
+ * @param {string} path - Chemin vers le fichier CSV
+ */
 function countStudents(path) {
   try {
     // Lecture synchronisée du fichier et suppression des lignes vides
@@ -29,7 +36,7 @@ function countStudents(path) {
 
   } catch (error) {
     // Gestion des erreurs si le fichier ne peut pas être lu
-        throw new Error('Cannot load the database');
+        throw Error('Cannot load the database');
     }
 }
 
