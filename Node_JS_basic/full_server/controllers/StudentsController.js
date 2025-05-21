@@ -8,7 +8,7 @@ const VALID_MAJORS = ['CS', 'SWE'];
 /**
  * This function returns and displays of the number of students in the field,
  * and the list of first names (ordered by appearance in the database file).
- * @author: Alex Arévalo <https://github.com/Kevindecastro>
+ * @author: Kevindecastro <https://github.com/Kevindecastro>
  */
 class StudentsController { // Class to handle the students controller
   static getAllStudents(request, response) {
