@@ -25,23 +25,18 @@ function countStudents(path) {
 
     // Création d'un objet pour regrouper les étudiants par filière
     const fields = {};
-    for (const row of students) {
-      const firstname = row[0].trim();
-      const field = row[3].trim();
-      if (!fields[field]) {
-        fields[field] = [];
-      }
-      fields[field].push(firstname);
+    for (const [firstname, , , field] of students) {
+        if (!fields[field]) fields[field] = [];
+        fields[field].push(firstname);
     }
-
     // Affichage du nombre d'étudiants et de la liste des prénoms pour chaque filière
-    for (const [field, names] of Object.entries(fields)) {
-      console.log(`Number of students in ${field}: ${names.length}. List: ${names.join(', ')}`);
+    for (const field in fields) {
+      console.log(`Number of students in ${field}: ${fields[field].length}. List: ${fields[field].join(', ')}`);
     }
 
   } catch (error) {
     // Gestion des erreurs si le fichier ne peut pas être lu
-        throw Error('Cannot load the database');
+        throw new Error('Cannot load the database');
     }
 }
 
