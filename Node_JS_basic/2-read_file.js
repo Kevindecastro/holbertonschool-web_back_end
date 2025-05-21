@@ -35,8 +35,8 @@ function countStudents(path) {
     }
 
     // Affichage du nombre d'étudiants et de la liste des prénoms pour chaque filière
-    for (const field in fields) {
-      console.log(`Number of students in ${field}: ${fields[field].length}. List: ${fields[field].join(', ')}`);
+    for (const [field, names] of Object.entries(fields)) {
+      console.log(`Number of students in ${field}: ${names.length}. List: ${names.join(', ')}`);
     }
 
   } catch (error) {
