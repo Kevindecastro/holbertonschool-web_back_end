@@ -1,43 +1,38 @@
 const fs = require('fs');
 
-/**
- * Lit un fichier CSV contenant une liste d'étudiants et affiche :
- * - Le nombre total d'étudiants
- * - Le nombre d'étudiants par filière
- * - La liste des prénoms d'étudiants par filière
- *
- * @param {string} path - Chemin vers le fichier CSV
- */
-function countStudents(path) {
+function countStudents(fileName) {
+  const students = {};
+  const fields = {};
+  let length = 0;
   try {
-    // Lecture synchronisée du fichier et suppression des lignes vides
-    const data = fs.readFileSync(path, 'utf8')
-    .split('\n')
-    .filter(line => line.trim() !== '');
-
-    // Extraction des lignes de données
-    const students = data.slice(1)
-    .map(line => line.split(','))
-    .filter(cols => cols.length >= 4);
-
-    // Affichage du nombre total d'étudiants
-    console.log(`Number of students: ${students.length}`);
-
-    // Création d'un objet pour regrouper les étudiants par filière
-    const fields = {};
-    for (const [firstname, , , field] of students) {
-        if (!fields[field]) fields[field] = [];
-        fields[field].push(firstname);
+    const content = fs.readFileSync(fileName, 'utf-8');
+    const lines = content.toString().split('\n');
+    for (let i = 0; i < lines.length; i += 1) {
+      if (lines[i]) {
+        length += 1;
+        const field = lines[i].toString().split(',');
+        if (Object.prototype.hasOwnProperty.call(students, field[3])) {
+          students[field[3]].push(field[0]);
+        } else {
+          students[field[3]] = [field[0]];
+        }
+        if (Object.prototype.hasOwnProperty.call(fields, field[3])) {
+          fields[field[3]] += 1;
+        } else {
+          fields[field[3]] = 1;
+        }
+      }
     }
-    // Affichage du nombre d'étudiants et de la liste des prénoms pour chaque filière
-    for (const field in fields) {
-      console.log(`Number of students in ${field}: ${fields[field].length}. List: ${fields[field].join(', ')}`);
+    const l = length - 1;
+    console.log(`Number of students: ${l}`);
+    for (const [key, value] of Object.entries(fields)) {
+      if (key !== 'field') {
+        console.log(`Number of students in ${key}: ${value}. List: ${students[key].join(', ')}`);
+      }
     }
-
   } catch (error) {
-    // Gestion des erreurs si le fichier ne peut pas être lu
-        throw new Error('Cannot load the database');
-    }
+    throw Error('Cannot load the database');
+  }
 }
 
 module.exports = countStudents;
