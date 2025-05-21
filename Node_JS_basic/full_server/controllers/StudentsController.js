@@ -5,11 +5,6 @@ import readDatabase from '../utils';
  */
 const VALID_MAJORS = ['CS', 'SWE'];
 
-/**
- * This function returns and displays of the number of students in the field,
- * and the list of first names (ordered by appearance in the database file).
- * @author: Alex Arévalo <https://github.com/Alexoat76>
- */
 class StudentsController { // Class to handle the students controller
   static getAllStudents(request, response) {
     const dataPath = process.argv.length > 2 ? process.argv[2] : '';
