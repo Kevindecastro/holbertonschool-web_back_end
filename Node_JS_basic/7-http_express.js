@@ -1,59 +1,63 @@
 const express = require('express');
-const countStudents = require('./3-read_file_async');
+
+const { readFile } = require('fs');
 
 const app = express();
 const port = 1245;
 
-// Fonction modifiée pour retourner la chaîne au lieu d'afficher
-const getStudentsInfo = (path) => new Promise((resolve, reject) => {
-  const fs = require('fs');
-
-  fs.readFile(path, 'utf-8', (err, data) => {
-    if (err) {
-      reject(new Error('Cannot load the database'));
-      return;
-    }
-    if (data) {
-      const lines = data.trim().split('\n');
-      const students = {};
-      const headers = lines[0].split(',');
-
-      // Regroupe les étudiants par "field"
-      for (const line of lines.slice(1)) {
-        if (line.trim() === '') continue; // Ignore lignes vides
-        const record = line.split(',');
-        const field = record[headers.length - 1];
-        if (!students[field]) students[field] = [];
-        students[field].push(record[0]); // prénom
+function countStudents(fileName) {
+  const students = {};
+  const fields = {};
+  let length = 0;
+  return new Promise((resolve, reject) => {
+    readFile(fileName, (err, data) => {
+      if (err) {
+        reject(err);
+      } else {
+        let output = '';
+        const lines = data.toString().split('\n');
+        for (let i = 0; i < lines.length; i += 1) {
+          if (lines[i]) {
+            length += 1;
+            const field = lines[i].toString().split(',');
+            if (Object.prototype.hasOwnProperty.call(students, field[3])) {
+              students[field[3]].push(field[0]);
+            } else {
+              students[field[3]] = [field[0]];
+            }
+            if (Object.prototype.hasOwnProperty.call(fields, field[3])) {
+              fields[field[3]] += 1;
+            } else {
+              fields[field[3]] = 1;
+            }
+          }
+        }
+        const l = length - 1;
+        output += `Number of students: ${l}\n`;
+        for (const [key, value] of Object.entries(fields)) {
+          if (key !== 'field') {
+            output += `Number of students in ${key}: ${value}. `;
+            output += `List: ${students[key].join(', ')}\n`;
+          }
+        }
+        resolve(output);
       }
-
-      let output = `Number of students: ${lines.length - 1}\n`;
-      for (const [field, studentList] of Object.entries(students)) {
-        output += `Number of students in ${field}: ${studentList.length}. List: ${studentList.join(', ')}\n`;
-      }
-      resolve(output.trim());
-    }
+    });
   });
-});
+}
 
 app.get('/', (req, res) => {
   res.send('Hello Holberton School!');
 });
-
-app.get('/students', async (req, res) => {
-  const db = process.argv[2];
-  let response = 'This is the list of our students\n';
-
-  try {
-    const studentData = await getStudentsInfo(db);
-    response += studentData;
-    res.set('Content-Type', 'text/plain');
-    res.send(response);
-  } catch (err) {
-    res.status(500).send(err.message);
-  }
+app.get('/students', (req, res) => {
+  countStudents(process.argv[2].toString()).then((output) => {
+    res.send(['This is the list of our students', output].join('\n'));
+  }).catch(() => {
+    res.send('This is the list of our students\nCannot load the database');
+  });
 });
 
-app.listen(port);
+app.listen(port, () => {
+});
 
 module.exports = app;
